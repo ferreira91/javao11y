@@ -1,0 +1,104 @@
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: javao11y-deployment
+#  labels:
+#    app: javao11y
+#spec:
+#  replicas: 3
+#  selector:
+#    matchLabels:
+#      app: javao11y
+#  template:
+#    metadata:
+#      labels:
+#        app: javao11y
+#    spec:
+#      containers:
+#        - name: javao11y
+#          image: localhost:5001/javao11y:latest
+#          ports:
+#            - name: app
+#              containerPort: 8080
+#            - name: metrics
+#              containerPort: 9464
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: javao11y-service
+#  labels:
+#    app: javao11y
+#spec:
+#  selector:
+#    app: javao11y
+#  ports:
+#    - name: app
+#      protocol: TCP
+#      port: 8080
+#      targetPort: 8080
+#    - name: metrics
+#      protocol: TCP
+#      port: 9464
+#      targetPort: 9464
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+        - name: example-app
+          image: fabxc/instrumented_app
+          ports:
+            - name: web
+              containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-app
+  labels:
+    app: example-app
+spec:
+  selector:
+    app: example-app
+  ports:
+    - name: web
+      port: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: example-app
+  labels:
+    team: frontend
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  endpoints:
+    - port: web
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: example-app
+  labels:
+    team: frontend
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  podMetricsEndpoints:
+    - port: web

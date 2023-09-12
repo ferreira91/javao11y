@@ -1,0 +1,7 @@
+server:
+  extraScrapeConfigs: |
+    - job_name: java-o11y
+      scrape_interval: 5s
+      static_configs:
+        - targets:
+            - javao11y-service:9464

@@ -1,0 +1,74 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2023-09-06T00:00:00.000Z",
+  "__export_source": "assistant",
+  "resources": [
+    {
+      "_id": "req_create_book",
+      "parentId": "wrk_example",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "url": "http://localhost:8080/books",
+      "name": "Create Book",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\"\n}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_books",
+      "parentId": "wrk_example",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "url": "http://localhost:8080/books",
+      "name": "List Books",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_book_by_id",
+      "parentId": "wrk_example",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "url": "http://localhost:8080/books/{{book_id}}",
+      "name": "Get Book by ID",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_book",
+      "parentId": "wrk_example",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "url": "http://localhost:8080/books/{{book_id}}",
+      "name": "Update Book",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Updated Title\",\n  \"author\": \"Updated Author\"\n}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_book",
+      "parentId": "wrk_example",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "url": "http://localhost:8080/books/{{book_id}}",
+      "name": "Delete Book",
+      "method": "DELETE",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_example",
+      "name": "Book CRUD",
+      "description": "",
+      "modified": 1630886400000,
+      "created": 1630886400000,
+      "_type": "workspace"
+    }
+  ]
+}

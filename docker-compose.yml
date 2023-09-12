@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  java-o11y:
+    build: .
+    container_name: java-o11y
+    environment:
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+    ports:
+      - "8080:8080"
+      - "9464:9464"
+    depends_on:
+      - jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:1.48
+    container_name: jaeger
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: "9411"
+    ports:
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+      - "14250:14250"
+      - "14268:14268"
+      - "14269:14269"
+      - "9411:9411"
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

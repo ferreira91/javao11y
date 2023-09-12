@@ -1,0 +1,26 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: javao11y
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pod-monitor
+spec:
+  selector:
+    matchLabels:
+      app: javao11y
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 20s
